@@ -14,6 +14,13 @@
 		90C4067E2AFFC30D00CD05DA /* MachOExploreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C4067D2AFFC30D00CD05DA /* MachOExploreTests.swift */; };
 		90C406882AFFC30D00CD05DA /* MachOExploreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C406872AFFC30D00CD05DA /* MachOExploreUITests.swift */; };
 		90C4068A2AFFC30D00CD05DA /* MachOExploreUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C406892AFFC30D00CD05DA /* MachOExploreUITestsLaunchTests.swift */; };
+		90C406972B009BE600CD05DA /* OpenPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C406962B009BE600CD05DA /* OpenPanel.swift */; };
+		90C406992B03185100CD05DA /* Explorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C406982B03185100CD05DA /* Explorer.swift */; };
+		90D7A7A52BAEDF0B00E786A6 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D7A7A42BAEDF0B00E786A6 /* DetailView.swift */; };
+		90D7A7A82BAEDF4800E786A6 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D7A7A72BAEDF4800E786A6 /* SpinnerView.swift */; };
+		90D7A7AB2BAEE06400E786A6 /* OutlineDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D7A7AA2BAEE06400E786A6 /* OutlineDao.swift */; };
+		90DC3F562B9DE7D50026936D /* MachOKit in Frameworks */ = {isa = PBXBuildFile; productRef = 90DC3F552B9DE7D50026936D /* MachOKit */; };
+		90DC3F582B9DE7D50026936D /* MachOKitC in Frameworks */ = {isa = PBXBuildFile; productRef = 90DC3F572B9DE7D50026936D /* MachOKitC */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +40,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		903BD66B2B1091360053125F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		90C406682AFFC30C00CD05DA /* MachOExplore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MachOExplore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90C4066B2AFFC30C00CD05DA /* MachOExploreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachOExploreApp.swift; sourceTree = "<group>"; };
@@ -45,6 +65,13 @@
 		90C406832AFFC30D00CD05DA /* MachOExploreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MachOExploreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90C406872AFFC30D00CD05DA /* MachOExploreUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachOExploreUITests.swift; sourceTree = "<group>"; };
 		90C406892AFFC30D00CD05DA /* MachOExploreUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachOExploreUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		90C406962B009BE600CD05DA /* OpenPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenPanel.swift; sourceTree = "<group>"; };
+		90C406982B03185100CD05DA /* Explorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explorer.swift; sourceTree = "<group>"; };
+		90D7A7A42BAEDF0B00E786A6 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		90D7A7A72BAEDF4800E786A6 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
+		90D7A7AA2BAEE06400E786A6 /* OutlineDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineDao.swift; sourceTree = "<group>"; };
+		90DC3F432B9D502D0026936D /* libdyld.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libdyld.tbd; path = usr/lib/system/libdyld.tbd; sourceTree = SDKROOT; };
+		90DC3F592B9EB5490026936D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +79,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90DC3F562B9DE7D50026936D /* MachOKit in Frameworks */,
+				90DC3F582B9DE7D50026936D /* MachOKitC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +101,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		903BD6682B1091360053125F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				90DC3F432B9D502D0026936D /* libdyld.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		90C4065F2AFFC30C00CD05DA = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +116,7 @@
 				90C4067C2AFFC30D00CD05DA /* MachOExploreTests */,
 				90C406862AFFC30D00CD05DA /* MachOExploreUITests */,
 				90C406692AFFC30C00CD05DA /* Products */,
+				903BD6682B1091360053125F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -95,10 +133,15 @@
 		90C4066A2AFFC30C00CD05DA /* MachOExplore */ = {
 			isa = PBXGroup;
 			children = (
+				90D7A7A92BAEE01100E786A6 /* Dao */,
+				90D7A7A62BAEDF3C00E786A6 /* Other */,
+				90D7A7A32BAEDEFA00E786A6 /* Explorer */,
 				90C4066B2AFFC30C00CD05DA /* MachOExploreApp.swift */,
 				90C4066D2AFFC30C00CD05DA /* ContentView.swift */,
+				90C406962B009BE600CD05DA /* OpenPanel.swift */,
 				90C4066F2AFFC30D00CD05DA /* Assets.xcassets */,
 				90C406742AFFC30D00CD05DA /* MachOExplore.entitlements */,
+				90DC3F592B9EB5490026936D /* Info.plist */,
 				90C406712AFFC30D00CD05DA /* Preview Content */,
 			);
 			path = MachOExplore;
@@ -129,6 +172,31 @@
 			path = MachOExploreUITests;
 			sourceTree = "<group>";
 		};
+		90D7A7A32BAEDEFA00E786A6 /* Explorer */ = {
+			isa = PBXGroup;
+			children = (
+				90C406982B03185100CD05DA /* Explorer.swift */,
+				90D7A7A42BAEDF0B00E786A6 /* DetailView.swift */,
+			);
+			path = Explorer;
+			sourceTree = "<group>";
+		};
+		90D7A7A62BAEDF3C00E786A6 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				90D7A7A72BAEDF4800E786A6 /* SpinnerView.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		90D7A7A92BAEE01100E786A6 /* Dao */ = {
+			isa = PBXGroup;
+			children = (
+				90D7A7AA2BAEE06400E786A6 /* OutlineDao.swift */,
+			);
+			path = Dao;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -139,12 +207,17 @@
 				90C406642AFFC30C00CD05DA /* Sources */,
 				90C406652AFFC30C00CD05DA /* Frameworks */,
 				90C406662AFFC30C00CD05DA /* Resources */,
+				903BD66B2B1091360053125F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = MachOExplore;
+			packageProductDependencies = (
+				90DC3F552B9DE7D50026936D /* MachOKit */,
+				90DC3F572B9DE7D50026936D /* MachOKitC */,
+			);
 			productName = MachOExplore;
 			productReference = 90C406682AFFC30C00CD05DA /* MachOExplore.app */;
 			productType = "com.apple.product-type.application";
@@ -217,6 +290,9 @@
 				Base,
 			);
 			mainGroup = 90C4065F2AFFC30C00CD05DA;
+			packageReferences = (
+				90DC3F542B9DE7D50026936D /* XCRemoteSwiftPackageReference "MachOKit" */,
+			);
 			productRefGroup = 90C406692AFFC30C00CD05DA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -259,7 +335,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90D7A7AB2BAEE06400E786A6 /* OutlineDao.swift in Sources */,
 				90C4066E2AFFC30C00CD05DA /* ContentView.swift in Sources */,
+				90C406972B009BE600CD05DA /* OpenPanel.swift in Sources */,
+				90C406992B03185100CD05DA /* Explorer.swift in Sources */,
+				90D7A7A52BAEDF0B00E786A6 /* DetailView.swift in Sources */,
+				90D7A7A82BAEDF4800E786A6 /* SpinnerView.swift in Sources */,
 				90C4066C2AFFC30C00CD05DA /* MachOExploreApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,6 +510,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MachOExplore/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -456,6 +538,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MachOExplore/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -581,6 +664,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		90DC3F542B9DE7D50026936D /* XCRemoteSwiftPackageReference "MachOKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/p-x9/MachOKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.13.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		90DC3F552B9DE7D50026936D /* MachOKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 90DC3F542B9DE7D50026936D /* XCRemoteSwiftPackageReference "MachOKit" */;
+			productName = MachOKit;
+		};
+		90DC3F572B9DE7D50026936D /* MachOKitC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 90DC3F542B9DE7D50026936D /* XCRemoteSwiftPackageReference "MachOKit" */;
+			productName = MachOKitC;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 90C406602AFFC30C00CD05DA /* Project object */;
 }
