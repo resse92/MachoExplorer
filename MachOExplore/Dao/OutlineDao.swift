@@ -23,63 +23,105 @@ import MachOKit
  [[self.class _indirectSymbolTableFieldBuilder] build],
  */
 
+struct OutlineVoidInfo { }
+
 struct OutlineItem: Hashable, Identifiable {
-    typealias ID = UInt64
+    typealias ID = UUID
     
     var description: String
-    var offset: UInt64
+    var info: Any
     var subchild: [OutlineItem]?
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(offset)
+    var id: UUID = UUID()
+    
+    static func == (lhs: OutlineItem, rhs: OutlineItem) -> Bool {
+        lhs.id == rhs.id
     }
     
-    var id: UInt64 {
-        self.offset
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 
 class MachoAccesser: ObservableObject {
-    var url: URL?
+    var url: URL? {
+        didSet {
+            if oldValue == url {
+                return
+            }
+            self.objectWillChange.send()
+        }
+    }
     
-    
-    func processUrl() async throws {
+    func processUrl() async throws -> [OutlineItem] {
         guard let url = self.url else {
             throw "no fileurl"
         }
-        try await self.load(fileUrl: url)
-        
+        return try await self.load(fileUrl: url)
     }
     
-    func load(fileUrl: URL) async throws {
+    func load(fileUrl: URL) async throws -> [OutlineItem] {
         let result = Task(priority: .high) {
             let file = try MachOKit.loadFromFile(url: fileUrl)
             switch file {
             case .machO(let machOfile):
-                print(machOfile)
+                let header = OutlineItem(
+                    description: "MachO Header",
+                    info: machOfile.header
+                )
                 
-                let header = OutlineItem(description: machOfile.header.fileType?.description ?? "Unkown", offset: 0)
-                
-                let loadCommands = OutlineItem(description: "LoadCommands", offset: UInt64(machOfile.headerStartOffset + machOfile.headerSize), subchild: [
-                ])
-                
-                machOfile.loadCommands.forEach { command in
-                    print(command.type)
+                let subLoadCommands = machOfile.loadCommands.map { loadcommand in
+                    var desc = loadcommand.type.description
+                    var children: [OutlineItem]? = nil
+                    if let command = loadcommand.info as? LoadCommandDescription {
+                        
+                        desc.append("(\(command.desc(from: machOfile)))")
+                        children = command.children(in: machOfile)
+                    }
+                    return OutlineItem(
+                        description: desc,
+                        info: loadcommand.info,
+                        subchild: children
+                    )
                 }
                 
+                let loadCommands = OutlineItem(
+                    description: "LoadCommands",
+                    info: OutlineVoidInfo(),
+                    subchild: subLoadCommands
+                )
+                var machoItems = [header, loadCommands]
                 
-                machOfile.sections
-                machOfile.functionStarts
-                machOfile.rebaseOperations
-                machOfile.dataInCode
-                machOfile.bindingSymbols
-                machOfile.weakBindOperations
-                machOfile.lazyBindingSymbols
-                machOfile.lazyBindOperations
-                machOfile.exportedSymbols
-                machOfile.symbolStrings
-                machOfile.allCStringTables
-                machOfile.indirectSymbols
+                let sections = machOfile.sections.map { sp in
+                    return OutlineItem(
+                        description: "Section (\(sp.segmentName),\(sp.sectionName))",
+                        info: sp
+                    )
+                }
+                
+                machoItems.append(contentsOf: sections)
+                
+                let result =  [
+                    OutlineItem(
+                        description: machOfile.header.fileType?.description ?? "Unkown",
+                        info: machOfile.header,
+                        subchild: machoItems
+                    )
+                ]
+                
+                return result
+                
+//                machOfile.functionStarts
+//                machOfile.rebaseOperations
+//                machOfile.dataInCode
+//                machOfile.bindingSymbols
+//                machOfile.weakBindOperations
+//                machOfile.lazyBindingSymbols
+//                machOfile.lazyBindOperations
+//                machOfile.exportedSymbols
+//                machOfile.symbolStrings
+//                machOfile.allCStringTables
+//                machOfile.indirectSymbols
                 
 //                [[self.class _bindingsInfoFieldBuilder] build],
 //                [[self.class _weakBindingsInfoFieldBuilder] build],
@@ -88,20 +130,11 @@ class MachoAccesser: ObservableObject {
 //                [[self.class _stringTableFieldBuilder] build],
 //                [[self.class _symbolTableFieldBuilder] build],
 //                [[self.class _indirectSymbolTableFieldBuilder] build],
-                
-                
             case .fat(let fatfile):
                 print(try fatfile.machOFiles())
+                return []
             }
         }
-        try await result.value
-    }
-}
-
-extension LoadCommand {
-    var description: String {
-        let desc: String
-        
-        return ""
+        return try await result.value
     }
 }

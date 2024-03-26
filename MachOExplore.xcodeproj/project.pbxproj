@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		90362A612BB240E0007FAE9F /* LoadCommand+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90362A602BB240E0007FAE9F /* LoadCommand+Extension.swift */; };
 		90C4066C2AFFC30C00CD05DA /* MachOExploreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C4066B2AFFC30C00CD05DA /* MachOExploreApp.swift */; };
 		90C4066E2AFFC30C00CD05DA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C4066D2AFFC30C00CD05DA /* ContentView.swift */; };
 		90C406702AFFC30D00CD05DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90C4066F2AFFC30D00CD05DA /* Assets.xcassets */; };
@@ -54,6 +55,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		90362A602BB240E0007FAE9F /* LoadCommand+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoadCommand+Extension.swift"; sourceTree = "<group>"; };
 		90C406682AFFC30C00CD05DA /* MachOExplore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MachOExplore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90C4066B2AFFC30C00CD05DA /* MachOExploreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachOExploreApp.swift; sourceTree = "<group>"; };
 		90C4066D2AFFC30C00CD05DA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				90D7A7AA2BAEE06400E786A6 /* OutlineDao.swift */,
+				90362A602BB240E0007FAE9F /* LoadCommand+Extension.swift */,
 			);
 			path = Dao;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				90C406972B009BE600CD05DA /* OpenPanel.swift in Sources */,
 				90C406992B03185100CD05DA /* Explorer.swift in Sources */,
 				90D7A7A52BAEDF0B00E786A6 /* DetailView.swift in Sources */,
+				90362A612BB240E0007FAE9F /* LoadCommand+Extension.swift in Sources */,
 				90D7A7A82BAEDF4800E786A6 /* SpinnerView.swift in Sources */,
 				90C4066C2AFFC30C00CD05DA /* MachOExploreApp.swift in Sources */,
 			);

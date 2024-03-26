@@ -1,4 +1,5 @@
 {
+  "originHash" : "7c2d4ea5ecd0e9570d2e893c9efc1d327eecf43f98bf9343bbe00a0da6e07f20",
   "pins" : [
     {
       "identity" : "machokit",
@@ -10,5 +11,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

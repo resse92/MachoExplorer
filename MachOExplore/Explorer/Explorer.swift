@@ -13,20 +13,6 @@ enum ValueMode: String, CaseIterable, Identifiable {
     case rva = "RVA"
 }
 
-struct Tree<T: Hashable>: Hashable {
-    var value: T
-    var children: [Tree<T>]
-}
-
-extension Array where Element == OutlineItem {
-    func toTableRow() -> [TableRow<Element>] {
-        self.map { item in
-//            let child = item.subchild?.toTableRow()
-            return TableRow(item)
-        }
-    }
-}
-
 struct ExplorerView: View {
     
     @Binding var url: URL?
@@ -37,7 +23,7 @@ struct ExplorerView: View {
     
     @State var topExpanded = false
     @State var toggleStates = (oneIsOn: false, twoIsOn: true)
-    @State var selectionItems: UInt64?
+    @State var selectionItems: UUID?
     
     @ObservedObject var accessor = MachoAccesser()
     
@@ -46,10 +32,10 @@ struct ExplorerView: View {
             VStack {
                 HSplitView {
                     List($nodes, selection: $selectionItems) { item in
-                        OutlineGroup(nodes, id: \.offset, children: \.subchild) { item in
-                            Text(item.description)
+                        OutlineGroup($nodes, id: \.id, children: \.subchild) { node in
+                            Text(node.wrappedValue.description)
                         }
-                    }.frame(minWidth: 100, idealWidth: 200, maxWidth: 300, maxHeight: .infinity)
+                    }.frame(minWidth: 100, idealWidth: 200, maxWidth: gp.size.width * 0.5, maxHeight: .infinity)
                     
                     DisclosureGroup("Items", isExpanded: $topExpanded) {
                         Toggle("Toggle 1", isOn: $toggleStates.oneIsOn)
@@ -76,15 +62,13 @@ struct ExplorerView: View {
                     }
                 }.onAppear {
                     self.accessor.url = self.url
-                    Task {
-                        do {
-                            try await self.accessor.processUrl()
-                        } catch let err {
-                            print(err)
-                        }
-                        
+                }.task {
+                    do {
+                        self.nodes = try await self.accessor.processUrl()
+                        print(self.nodes.count)
+                    } catch let err {
+                        print(err)
                     }
-                    
                 }
             }.frame(width: gp.size.width, height: gp.size.height)
         }.frame(width: 1000, height: 600)
