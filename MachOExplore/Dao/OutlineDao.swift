@@ -4,25 +4,6 @@
 import Foundation
 import MachOKit
 
-/**
- header.build,
- loadCommands.build,
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wobjc-method-access"
- [[self.class _sectionsFieldBuilder] build],
- [[self.class _functionStartsFieldBuilder] build],
- [[self.class _rebaseInfoFieldBuilder] build],
- [[self.class _dataInCodeFieldBuilder] build],
- [[self.class _splitSegmentInfoFieldBuilder] build],
- [[self.class _bindingsInfoFieldBuilder] build],
- [[self.class _weakBindingsInfoFieldBuilder] build],
- [[self.class _lazyBindingsInfoFieldBuilder] build],
- [[self.class _exportsInfoFieldBuilder] build],
- [[self.class _stringTableFieldBuilder] build],
- [[self.class _symbolTableFieldBuilder] build],
- [[self.class _indirectSymbolTableFieldBuilder] build],
- */
-
 struct OutlineVoidInfo { }
 
 struct OutlineItem: Hashable, Identifiable {
@@ -30,7 +11,7 @@ struct OutlineItem: Hashable, Identifiable {
     
     var description: String
     var info: Any
-    var subchild: [OutlineItem]?
+    var children: [OutlineItem]?
     
     var id: UUID = UUID()
     
@@ -81,17 +62,18 @@ class MachoAccesser: ObservableObject {
                     return OutlineItem(
                         description: desc,
                         info: loadcommand.info,
-                        subchild: children
+                        children: children
                     )
                 }
                 
                 let loadCommands = OutlineItem(
                     description: "LoadCommands",
                     info: OutlineVoidInfo(),
-                    subchild: subLoadCommands
+                    children: subLoadCommands
                 )
                 var machoItems = [header, loadCommands]
                 
+                // sections
                 let sections = machOfile.sections.map { sp in
                     return OutlineItem(
                         description: "Section (\(sp.segmentName),\(sp.sectionName))",
@@ -101,40 +83,69 @@ class MachoAccesser: ObservableObject {
                 
                 machoItems.append(contentsOf: sections)
                 
+                let dyldInfo = try await self.processLoaderInfo(machOFile: machOfile)
+                machoItems.append(contentsOf: dyldInfo)
+                
                 let result =  [
                     OutlineItem(
                         description: machOfile.header.fileType?.description ?? "Unkown",
                         info: machOfile.header,
-                        subchild: machoItems
+                        children: machoItems
                     )
                 ]
                 
+                
+                
                 return result
-                
-//                machOfile.functionStarts
-//                machOfile.rebaseOperations
-//                machOfile.dataInCode
-//                machOfile.bindingSymbols
-//                machOfile.weakBindOperations
-//                machOfile.lazyBindingSymbols
-//                machOfile.lazyBindOperations
-//                machOfile.exportedSymbols
-//                machOfile.symbolStrings
-//                machOfile.allCStringTables
-//                machOfile.indirectSymbols
-                
-//                [[self.class _bindingsInfoFieldBuilder] build],
-//                [[self.class _weakBindingsInfoFieldBuilder] build],
-//                [[self.class _lazyBindingsInfoFieldBuilder] build],
-//                [[self.class _exportsInfoFieldBuilder] build],
-//                [[self.class _stringTableFieldBuilder] build],
-//                [[self.class _symbolTableFieldBuilder] build],
-//                [[self.class _indirectSymbolTableFieldBuilder] build],
             case .fat(let fatfile):
                 print(try fatfile.machOFiles())
                 return []
             }
         }
         return try await result.value
+    }
+    
+    func processLoaderInfo(machOFile: MachOFile) async throws -> [OutlineItem] {
+        var result: [OutlineItem] = []
+        // dyldInfo info
+        var dyldInfoChildren: [OutlineItem] = []
+        if let rebaseOperations = machOFile.rebaseOperations {
+            dyldInfoChildren.append(OutlineItem(description: "Rebase Info", info: rebaseOperations))
+        }
+        if let bindOperations = machOFile.bindOperations {
+            dyldInfoChildren.append(OutlineItem(description: "Binding Info", info: bindOperations))
+        }
+        if let weakBindOperations = machOFile.weakBindOperations {
+            dyldInfoChildren.append(OutlineItem(description: "Weak Binding Info", info: weakBindOperations))
+        }
+        if let lazyBindOperations = machOFile.lazyBindOperations {
+            dyldInfoChildren.append(OutlineItem(description: "Lazy Binding Info", info: lazyBindOperations))
+        }
+        if let exportTrieEntries = machOFile.exportTrieEntries {
+            dyldInfoChildren.append(OutlineItem(description: "Weak Binding Info", info: exportTrieEntries))
+        }
+        
+        result.append(OutlineItem(description: "Dynamic Loader Info", info: OutlineVoidInfo(), children: dyldInfoChildren))
+        
+        if let functionStarts = machOFile.functionStarts {
+            result.append(OutlineItem(description: "Function Starts", info: functionStarts))
+        }
+        
+        if let dataInCode = machOFile.dataInCode {
+            result.append(OutlineItem(description: "Data in Code", info: dataInCode))
+        }
+        
+        result.append(OutlineItem(description: "String Tables", info: machOFile.allCStringTables))
+        
+        
+        if let symbolStrings = machOFile.symbolStrings {
+            result.append(OutlineItem(description: "Symbol Table", info: symbolStrings))
+        }
+        
+        if let indirectSymbols = machOFile.indirectSymbols {
+            result.append(OutlineItem(description: "Indirect Symbol Table", info: indirectSymbols))
+        }
+        
+        return result
     }
 }

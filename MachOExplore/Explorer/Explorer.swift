@@ -32,7 +32,7 @@ struct ExplorerView: View {
             VStack {
                 HSplitView {
                     List($nodes, selection: $selectionItems) { item in
-                        OutlineGroup($nodes, id: \.id, children: \.subchild) { node in
+                        OutlineGroup($nodes, id: \.id, children: \.children) { node in
                             Text(node.wrappedValue.description)
                         }
                     }.frame(minWidth: 100, idealWidth: 200, maxWidth: gp.size.width * 0.5, maxHeight: .infinity)
