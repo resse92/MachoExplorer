@@ -5,13 +5,7 @@ import Foundation
 import SwiftUI
 import MachOKit
 
-enum ValueMode: String, CaseIterable, Identifiable {
-    var id: Self {
-        self
-    }
-    case raw = "RAW"
-    case rva = "RVA"
-}
+
 
 struct ExplorerView: View {
     
@@ -20,10 +14,8 @@ struct ExplorerView: View {
     @State private var valueMode: ValueMode = .raw
     
     @State private var nodes: [OutlineItem] = []
-    
-    @State var topExpanded = false
-    @State var toggleStates = (oneIsOn: false, twoIsOn: true)
-    @State var selectionItems: UUID?
+    @State var selectId: OutlineItem.ID?
+    @State var selectItem: OutlineItem?
     
     @ObservedObject var accessor = MachoAccesser()
     
@@ -31,19 +23,27 @@ struct ExplorerView: View {
         GeometryReader { gp in
             VStack {
                 HSplitView {
-                    List($nodes, selection: $selectionItems) { item in
+                    List(selection: $selectId) {
                         OutlineGroup($nodes, id: \.id, children: \.children) { node in
                             Text(node.wrappedValue.description)
                         }
-                    }.frame(minWidth: 100, idealWidth: 200, maxWidth: gp.size.width * 0.5, maxHeight: .infinity)
-                    
-                    DisclosureGroup("Items", isExpanded: $topExpanded) {
-                        Toggle("Toggle 1", isOn: $toggleStates.oneIsOn)
-                        Toggle("Toggle 2", isOn: $toggleStates.twoIsOn)
-                        DisclosureGroup("Sub-items") {
-                            Text("Sub-item 1")
+                    }.frame(
+                        minWidth: 100,
+                        idealWidth: 200,
+                        maxWidth: gp.size.width * 0.5,
+                        maxHeight: .infinity
+                    ).onChange(of: selectId) { _, newValue in
+                        if let newValue = newValue {
+                            self.selectItem = self.findItem(items: self.nodes, targetId: newValue)
+                        } else {
+                            self.selectItem = nil
                         }
-                    }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                    
+                    DetailView(
+                        valueMode: $valueMode,
+                        item: $selectItem
+                    ).frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 .toolbar {
                     ToolbarItemGroup {
@@ -65,13 +65,26 @@ struct ExplorerView: View {
                 }.task {
                     do {
                         self.nodes = try await self.accessor.processUrl()
-                        print(self.nodes.count)
                     } catch let err {
                         print(err)
                     }
                 }
             }.frame(width: gp.size.width, height: gp.size.height)
         }.frame(width: 1000, height: 600)
+    }
+    
+    func findItem(items: [OutlineItem], targetId: OutlineItem.ID) -> OutlineItem? {
+        for item in items {
+            if item.id == targetId {
+                return item
+            }
+            if let children = item.children {
+                if let item = findItem(items: children, targetId: targetId) {
+                    return item
+                }
+            }
+        }
+        return nil
     }
 }
 

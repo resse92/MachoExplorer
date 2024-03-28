@@ -3,4 +3,68 @@
    uuid = "72CD5B46-D23E-46AC-ABA4-FC29756F9859"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "41E086B7-C0E3-4070-95B2-E87A84ADA827"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MachOExplore/Explorer/Explorer.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ACE81F16-D834-4F61-BBDE-1F4129F7B1F6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MachOExplore/Explorer/Explorer.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "findItem(items:targetId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "ACE81F16-D834-4F61-BBDE-1F4129F7B1F6 - bbec6b76fc9d5f9c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MachOExplore.ExplorerView.findItem(items: Swift.Array&lt;MachOExplore.OutlineItem&gt;, targetId: Foundation.UUID) -&gt; Swift.Optional&lt;MachOExplore.OutlineItem&gt;"
+                  moduleName = "MachOExplore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/resse/Desktop/iOS/MachOExplore/MachOExplore/Explorer/Explorer.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77">
+               </Location>
+               <Location
+                  uuid = "ACE81F16-D834-4F61-BBDE-1F4129F7B1F6 - bbec6b76fc9d5f9c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MachOExplore.ExplorerView.findItem(items: Swift.Array&lt;MachOExplore.OutlineItem&gt;, targetId: Foundation.UUID) -&gt; Swift.Optional&lt;MachOExplore.OutlineItem&gt;"
+                  moduleName = "MachOExplore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/resse/Desktop/iOS/MachOExplore/MachOExplore/Explorer/Explorer.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
